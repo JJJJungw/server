@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Charts - Model Explanation</title>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='assets/css/styles2.css') }}" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+</head>
+<body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <a class="navbar-brand ps-3" href="{{ url_for('index') }}">LSTM</a>
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+    </nav>
+    
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <div class="sb-sidenav-menu-heading">Core</div>
+                        <a class="nav-link" href="{{ url_for('dashboard') }}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Data
+                        </a>
+                        <div class="sb-sidenav-menu-heading">Addons</div>
+                        <a class="nav-link" href="{{ url_for('charts') }}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                            Models
+                        </a>
+                        <a class="nav-link" href="{{ url_for('tables') }}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                            Result
+                        </a>
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">태추차</div>
+                    LSTM
+                </div>
+            </nav>
+        </div>
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4">Model Explanation</h1>
+                    
+                    <!-- 모델 1 설명 -->
+                    <div class="card mb-4">
+                        <div class="card-header"><i class="fas fa-cogs me-1"></i> LSTM + GRU 모델</div>
+                        <div class="card-body">
+                            <pre>
+사용 Layers
+LSTM 계층
+- 순차 데이터의 장기적인의존성을 학습하기 위해 사용
+- 장기 의존성 학습으로 긴 시퀀스 데이터에서도 맥락을 잃지 않고 학습 가능, 시계열 데이터, 자연어 처리등에 탁월한 성능
+Dropout 계층
+- 과적합 방지를 위해 사용
+- 학습 과정에서 일부 뉴런을 무작위로 사용하지 않음으로써 특성 뉴런에 지나치게 의존하는 것을 방지
+- 모델의 일반화 성능 향상
+GRU 계층
+- LSTM과 비슷한 기능을 하면서 계산 비용이 더 적기 때문에 효율적인 학습을 위해 사용
+- LSTM 대비 계산량이적어 학습 속도가 빠르고 메모리 사용량이 적음
+- LSTM 과 함께 사용 시 다양한 패턴을 학습할 수 있음
+Dense 계층
+- 모델의 최종 출력으로 예측 값 생성을 위해 사용
+                            </pre>
+                            <p>LSTM과 GRU를 조합함으로써 각각의 장점을 활용하여 시계열 데이터를 더욱 정확히 학습 가능</p>
+                        </div>
+                    </div>
+
+                    <!-- 모델 2 설명 -->
+                    <div class="card mb-4">
+                        <div class="card-header"><i class="fas fa-cogs me-1"></i> LSTM + CNN 모델</div>
+                        <div class="card-body">
+                            <pre>
+사용 Layers
+Conv1D 계층
+- 1D 합성곱 계층으로 입력 데이터를 컨볼루션 필터로 처리하여 특징 추출
+- 시계열 데이터에서 인접한 데이터 간 관계를 학습
+- 특징 학습 강화로 중요한 시계열 패턴(예: 급격한 변화 등)을 자동으로 학습
+MaxPooling1D 계층
+- 인접한 시점 중 가장 큰 값을 선택을하여 데이터 크기 축소 연산 비용 절감
+- 과적합 방지
+Bidirectional LSTM 계층
+- 시계열 데이터의 양방향 관계를 학습하기 위해 사용
+- 과거와 미래의 데이ㅏ터를 동시에 고려하여 정교한 예측
+GRU 계층
+- LSTM과 비슷한 기능을 하면서 계산 비용이 더 적기 때문에 효율적인 학습을 위해 사용
+- LSTM 대비 계산량이적어 학습 속도가 빠르고 메모리 사용량이 적음
+- LSTM 과 함께 사용 시 다양한 패턴을 학습할 수 있음
+Dense 계층
+- 모델의 최종 출력으로 예측 값 생성을 위해 사용
+                            </pre>
+                            <p>각각의 계층과 결합하여 지역적패턴(CNN)과 시계열 의존성(RNN)을 함께 학습</p>
+                            <p>Conv1D: "현재 순간에만 집중하는 전문가" → 특정 순간의 변화를 분석.
+                            </p>
+                            <p>Bidirectional LSTM: "과거와 미래 모두 고려하는 전문가" → 데이터를 전방위적으로 이해.
+                            </p>
+                            <p>GRU: "효율성을 중시하는 전문가" → 중기 패턴을 효율적으로 학습.
+                            </p>
+                            <p>LSTM: "장기적 흐름을 보는 전문가" → 데이터의 전체 맥락을 파악.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="card mb-4">
+                        <div class="card-header"><i class="fas fa-cogs me-1"></i> XGBoost 모델</div>
+                        <div class="card-body">
+                            <pre># XGBoost 모델 구축
+DMatrix
+- XGBoost에서 최적화된 데이터 구조로 사용
+- 빠른 학습 및 예측을 위해 데이터 전처리 과정을 최적화
+
+Hyperparameters
+- objective: 'reg:squarederror'
+  회귀 문제를 해결하기 위한 손실 함수로 제곱 오차를 최소화
+- eval_metric: 'rmse'
+  모델 평가 지표로 RMSE (Root Mean Square Error)를 사용
+  예측과 실제값의 차이를 제곱하여 평균 후 제곱근을 구함으로써 오차를 직관적으로 이해 가능
+- learning_rate
+  모델의 학습 속도를 조절하는 비율
+  학습 속도를 낮춤으로써 과적합 방지와 더 안정적인 학습 가능
+- max_depth
+  각 트리의 최대 깊이로, 트리의 복잡도를 조절하여 과적합 방지
+- subsample
+  각 트리 학습 시 사용하는 데이터 샘플 비율로 데이터 다양성 확보
+- colsample_bytree
+  각 트리 학습 시 사용하는 특성의 비율로 특성 간 상관성을 줄임
+- seed
+  랜덤 시드 고정으로 결과 재현 가능
+
+Early Stopping
+- early_stopping_rounds
+  반복할 동안 평가 지표 개선이 없으면 학습을 조기에 중단하여 시간을 절약
+
+Feature Importance
+- 학습된 모델은 특성 중요도를 제공하며, 이를 통해 어떤 특성이 가장 큰 영향을 미쳤는지 파악 가능
+        </pre>
+        <p>XGBoost는 고성능 부스팅 기법을 사용하여 회귀 및 분류 문제에서 뛰어난 성능을 발휘</p>
+        <p>DMatrix: "데이터를 효율적으로 관리하는 도구" → 빠른 학습과 예측 가능.</p>
+        <p>Hyperparameters: "모델의 조정 가능한 레버" → 성능과 일반화의 균형 조정.</p>
+        <p>Early Stopping: "시간과 성능의 균형" → 더 이상 개선이 없으면 중단.</p>
+        <p>XGBoost는 복잡한 데이터셋에서도 높은 예측 정확도를 제공합니다.</p>
+    </div>
+</div>
+
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
